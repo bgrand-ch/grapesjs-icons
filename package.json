@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "type": "module",
+  "name": "grapesjs-icons",
+  "version": "0.0.0",
+  "main": "./dist/plugin.cjs",
+  "module": "./dist/plugin.js",
+  "typings": "./dist/plugin.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "iconify-icon": "1.0.8"
+  },
+  "devDependencies": {
+    "grapesjs": "0.21.3",
+    "typescript": "5.1.6",
+    "vite": "4.4.7",
+    "vite-plugin-dts": "3.3.1"
+  },
+  "peerDependencies": {
+    "grapesjs": "0.21.x"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=8"
+  }
+}
