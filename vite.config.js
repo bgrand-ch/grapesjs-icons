@@ -17,6 +17,7 @@ export default defineConfig({
   },
   plugins: [
     dts({
+      outDir: './dist/types',
       exclude: [
         './src/editor.ts'
       ]
