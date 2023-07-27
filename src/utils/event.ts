@@ -1,10 +1,10 @@
-import type { EventData } from '../types'
+import type { EventListenerData } from '../types'
 
-const events: EventData[] = []
+const eventListeners: EventListenerData[] = []
 
 export function foundEventListener (type: string, element: HTMLElement): number {
-  return events.findIndex(event => {
-    return event.type === type && event.element === element
+  return eventListeners.findIndex(eventListener => {
+    return eventListener.type === type && eventListener.element === element
   })
 }
 
@@ -20,32 +20,42 @@ export function attachEventListener (type: string, element: HTMLElement, listene
 
   element.addEventListener(type, listener)
 
-  const event: EventData = {
+  eventListeners.push({
     type,
     element,
     listener
-  }
-
-  events.push(event)
+  })
 }
 
-export function detachEventListener (type: string, element: HTMLElement) {
+export function detachEventListener (type: string, element: HTMLElement): void {
   const eventIndex = foundEventListener(type, element)
 
   if (eventIndex === -1) {
     return
   }
 
-  const { listener } = events[eventIndex]
+  const { listener } = eventListeners[eventIndex]
 
   element.removeEventListener(type, listener)
-  events.splice(eventIndex, 1)
+  eventListeners.splice(eventIndex, 1)
 }
 
-export function detachAllEventListeners () {
-  for (const { type, element, listener } of events) {
+export function detachAllEventListeners (className?: string): void {
+  const totalEventListeners = eventListeners.length
+  const removedIndexes: number[] = []
+
+  for (let index = 0; index < totalEventListeners; index++) {
+    const { type, element, listener } = eventListeners[index]
+
+    if (className && !element.classList.contains(className)) {
+      continue
+    }
+
     element.removeEventListener(type, listener)
+    removedIndexes.push(index)
   }
 
-  events.length = 0
+  for (const removedIndex of removedIndexes) {
+    eventListeners.splice(removedIndex, 1)
+  }
 }
