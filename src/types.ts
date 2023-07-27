@@ -1,30 +1,50 @@
-export type Options = {
-  collectionNames: string[],
-  componentType?: string,
-  componentName?: string,
-  modalTitle?: string,
-  blockCategory?: string
+export type ModalOptions = {
+  title: string,
+  collectionText: string,
+  categoryText: string,
+  searchText: string
 }
 
-export type CollectionCategories = {
+export type ComponentOptions = {
+  type: string,
+  name: string
+}
+
+export type BlockOptions = {
+  category: string
+}
+
+export type PluginOptions = {
+  collections: string[],
+  modal?: Partial<ModalOptions>,
+  component?: Partial<ComponentOptions>,
+  block?: Partial<BlockOptions>
+}
+
+type IconCollectionCategories = {
   [key: string]: string[]
 }
 
-export type CollectionAliases = {
+type IconCollectionAliases = {
   [key: string]: string
 }
 
-export type CollectionSuffixes = {
+type IconCollectionSuffixes = {
   [key: string]: string
 }
 
-export type CollectionData = {
+export type IconCollection = {
   prefix: string,
   total: number,
   title: string,
-  categories: CollectionCategories,
+  categories: IconCollectionCategories,
   uncategorized?: string[],
   hidden?: string[],
-  aliases?: CollectionAliases,
-  suffixes?: CollectionSuffixes
+  aliases?: IconCollectionAliases,
+  suffixes?: IconCollectionSuffixes
+}
+
+export type SelectOption = {
+  text: string,
+  value: string
 }

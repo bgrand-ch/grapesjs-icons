@@ -23,7 +23,6 @@ export function generateModalContent (
   return fragmentElement
 }
 
-// TODO: Fix multiple click event when close and reopen modal
 export function openModal (title: string, iconCollections: CollectionData[], editor: Editor) {
   const { Modal } = editor
   const selectedIconCollection = getSelectedIconCollection(iconCollections)

@@ -4,10 +4,9 @@ import { generateModalContent } from './modal'
 import { getSelectedIconCollection } from './icon'
 import { observeElements, onInterval, stopSubscriptions } from './observer'
 import { getSvgIcon } from './svg'
-import { resetCollectionElements } from './element'
 
 import type { Editor } from 'grapesjs'
-import type { CollectionData } from '../types'
+import type { IconCollection } from '../types'
 
 function setActiveBackgroundColor (activeElement: HTMLSpanElement): void {
   activeElement.style.backgroundColor = activeColor
@@ -18,7 +17,7 @@ function setActiveIconCollection (activeCollectionElement: HTMLSpanElement): voi
   localStorage.setItem(collectionItemName, collectionPrefix)
 }
 
-function setActiveContentElement (iconCollections: CollectionData[]): boolean {
+function setActiveContentElement (iconCollections: IconCollection[]): boolean {
   const contentSelector = `.${contentName}`
   const contentElement = document.querySelector<HTMLDivElement>(contentSelector)
   const selectedIconCollection = getSelectedIconCollection(iconCollections)
@@ -33,7 +32,7 @@ function setActiveContentElement (iconCollections: CollectionData[]): boolean {
   return true
 }
 
-export function setActiveCollectionElement (selectedIconCollection: CollectionData): void {
+export function setActiveCollectionElement (selectedIconCollection: IconCollection): void {
   const { prefix } = selectedIconCollection
   const collectionSelector = `[data-collection-prefix="${prefix}"]`
   const activeCollectionElement = document.querySelector<HTMLSpanElement>(collectionSelector)
@@ -46,7 +45,7 @@ export function setActiveCollectionElement (selectedIconCollection: CollectionDa
 }
 
 export function onActiveCollectionChange (
-  iconCollections: CollectionData[],
+  iconCollections: IconCollection[],
   collectionElements: NodeListOf<HTMLSpanElement>,
   modalModule: any, // TODO: Use GrapesJS "ModalModule" interface
   editor: Editor
@@ -64,7 +63,6 @@ export function onActiveCollectionChange (
       return
     }
 
-    resetCollectionElements(collectionElements)
     setActiveIconCollection(activeCollectionElement)
     setActiveBackgroundColor(activeCollectionElement)
 

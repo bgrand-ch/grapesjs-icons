@@ -3,14 +3,10 @@ import 'grapesjs/dist/css/grapes.min.css'
 import grapesjs, { usePlugin } from 'grapesjs'
 import plugin from './plugin'
 
-import type { Options } from './types'
+import type { PluginOptions } from './types'
 
-const options: Options = {
-  collectionNames: [
-    'mdi',
-    'ri',
-    'emojione'
-  ]
+const options: PluginOptions = {
+  collections: ['mdi', 'ri', 'emojione']
 }
 
 grapesjs.init({

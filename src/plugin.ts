@@ -1,21 +1,20 @@
+import { getModalOptions, getComponentOptions, getBlockOptions } from './utils/option'
 import { getIconCollections } from './utils/icon'
 import { openModal } from './utils/modal'
 
 import type { Plugin, Component } from 'grapesjs'
-import type { CollectionData, Options } from './types'
+import type { IconCollection, PluginOptions } from './types'
 
 const commandName = 'open-icon-modal'
 
-const plugin: Plugin<Options> = (editor, options) => {
+const plugin: Plugin<PluginOptions> = (editor, options) => {
   const { DomComponents, Commands, Modal, BlockManager } = editor
+  const { collections, modal = {}, component = {}, block = {} } = options
+  const { title } = getModalOptions(modal)
+  const { type, name } = getComponentOptions(component)
+  const { category } = getBlockOptions(block)
 
-  const type = options.componentType || 'icon'
-  const name = options.componentName || 'Icon' // TODO: i18n
-  const title = options.modalTitle || 'Icons' // TODO: i18n
-  const category = options.blockCategory || 'Basic' // TODO: i18n
-  const collectionNames = options.collectionNames
-
-  let iconCollections: CollectionData[] = []
+  let iconCollections: IconCollection[] = []
 
   DomComponents.addType(type, {
     isComponent (element) {
@@ -28,9 +27,6 @@ const plugin: Plugin<Options> = (editor, options) => {
         attributes: {
           'data-type': type
         },
-        classes: [
-          'iconify-inline'
-        ],
         style: {
           display: 'inline-block',
           width: '48px',
@@ -75,7 +71,7 @@ const plugin: Plugin<Options> = (editor, options) => {
   })
 
   editor.on('load', async () => {
-    iconCollections = await getIconCollections(collectionNames)
+    iconCollections = await getIconCollections(collections)
   })
 
   editor.on('block:drag:stop', (component: Component) => {
