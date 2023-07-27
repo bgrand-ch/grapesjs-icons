@@ -10,7 +10,7 @@ const commandName = 'open-icon-modal'
 const plugin: Plugin<PluginOptions> = (editor, options) => {
   const { DomComponents, Commands, Modal, BlockManager } = editor
   const { collections, modal = {}, component = {}, block = {} } = options
-  const { title } = getModalOptions(modal)
+  const modalOptions = getModalOptions(modal)
   const { type, name } = getComponentOptions(component)
   const { category } = getBlockOptions(block)
 
@@ -59,7 +59,7 @@ const plugin: Plugin<PluginOptions> = (editor, options) => {
   })
 
   Commands.add(commandName, () => {
-    openModal(title, iconCollections, editor)
+    openModal(editor, modalOptions, iconCollections)
   })
 
   BlockManager.add(type, {

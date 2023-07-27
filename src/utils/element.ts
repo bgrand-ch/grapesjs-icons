@@ -110,10 +110,12 @@ function generateIconTargetElement (
 
 export function generateContentElement (
   iconCollection: IconCollection,
-  categoryName: string
+  categoryName?: string
 ): HTMLDivElement {
   const { categories, prefix: iconPrefix } = iconCollection
-  const iconNames = categories[categoryName]
+  const iconNames = !categoryName
+    ? categories[Object.keys(categories)[0]]
+    : categories[categoryName]
   const contentElement = document.createElement('div')
 
   for (const iconName of iconNames) {
@@ -135,7 +137,6 @@ export function generateContainerElement (): HTMLDivElement {
   containerElement.style.display = 'flex'
   containerElement.style.flexDirection = 'column'
   containerElement.style.gap = '10px'
-  containerElement.style.padding = '10px'
   containerElement.classList.add(containerName)
 
   return containerElement
