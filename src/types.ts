@@ -48,3 +48,9 @@ export type SelectOption = {
   text: string,
   value: string
 }
+
+export type EventData = {
+  type: string,
+  element: HTMLElement,
+  listener: EventListener
+}

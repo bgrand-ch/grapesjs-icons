@@ -4,11 +4,11 @@ import { getSelectedIconCollection } from './icon'
 import { onActiveCollectionChange } from './active'
 
 import type { Editor } from 'grapesjs'
-import type { CollectionData } from '../types'
+import type { IconCollection } from '../types'
 
 export function generateModalContent (
-  selectedIconCollection: CollectionData,
-  iconCollections?: CollectionData[]
+  selectedIconCollection: IconCollection,
+  iconCollections?: IconCollection[]
 ): DocumentFragment {
   const fragmentElement = new DocumentFragment()
 
@@ -23,7 +23,7 @@ export function generateModalContent (
   return fragmentElement
 }
 
-export function openModal (title: string, iconCollections: CollectionData[], editor: Editor) {
+export function openModal (title: string, iconCollections: IconCollection[], editor: Editor) {
   const { Modal } = editor
   const selectedIconCollection = getSelectedIconCollection(iconCollections)
 

@@ -1,22 +1,10 @@
 import {
-  containerName, collectionName, categoryName, searchName,
-  actionsName, iconTargetName, contentName, modalContainerName
+  collectionName, categoryName, searchName, actionsName,
+  iconTargetName, contentName, containerName
 } from '../constants'
 import { getIconCollectionOptions, getIconCategoryOptions } from './icon'
 
 import type { SelectOption, IconCollection } from '../types'
-
-export function generateContainerElement (): HTMLDivElement {
-  const containerElement = document.createElement('div')
-
-  containerElement.style.display = 'flex'
-  containerElement.style.flexDirection = 'column'
-  containerElement.style.gap = '10px'
-  containerElement.style.padding = '10px'
-  containerElement.classList.add(containerName)
-
-  return containerElement
-}
 
 function generateSelectElement (options: SelectOption[]): HTMLSelectElement {
   const selectElement = document.createElement('select')
@@ -141,11 +129,21 @@ export function generateContentElement (
   return contentElement
 }
 
+export function generateContainerElement (): HTMLDivElement {
+  const containerElement = document.createElement('div')
+
+  containerElement.style.display = 'flex'
+  containerElement.style.flexDirection = 'column'
+  containerElement.style.gap = '10px'
+  containerElement.style.padding = '10px'
+  containerElement.classList.add(containerName)
+
+  return containerElement
+}
+
 export function getFragmentHtml (fragmentElement: DocumentFragment): string {
-  const divEl = document.createElement('div')
+  const containerElement = generateContainerElement()
+  containerElement.appendChild(fragmentElement)
 
-  divEl.appendChild(fragmentElement)
-  divEl.setAttribute('id', modalContainerName)
-
-  return divEl.outerHTML
+  return containerElement.outerHTML
 }
