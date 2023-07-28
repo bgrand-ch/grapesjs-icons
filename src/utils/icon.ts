@@ -1,4 +1,4 @@
-import { collectionItemName } from '../constants'
+import { getIconCollectionName, setIconCollectionName } from './storage'
 
 import type { IconCollection, SelectOption } from '../types'
 
@@ -7,18 +7,18 @@ const pluginName = import.meta.env.VITE_PLUGIN_NAME
 const logScope = `[${pluginName}::utils/icon]`
 
 export function getSelectedIconCollection (iconCollections: IconCollection[]): IconCollection|null {
-  let iconCollectionPrefix = localStorage.getItem(collectionItemName)
+  let iconCollectionName = getIconCollectionName()
 
-  if (!iconCollectionPrefix) {
+  if (!iconCollectionName) {
     const firstIconCollection = iconCollections[0]
     const { prefix } = firstIconCollection
 
-    localStorage.setItem(collectionItemName, prefix)
-    iconCollectionPrefix = prefix
+    setIconCollectionName(prefix)
+    iconCollectionName = prefix
   }
 
   const selectedIconCollection = iconCollections.find(iconCollection => {
-    return iconCollection.prefix === iconCollectionPrefix
+    return iconCollection.prefix === iconCollectionName
   })
 
   if (!selectedIconCollection) {

@@ -1,24 +1,28 @@
-import { collectionName, categoryName } from '../constants'
-import { generateActionsElement, generateContentElement, getFragmentHtml } from './element'
+import { collectionName, categoryName, searchName } from '../constants'
+import { generateModalContent } from './element'
 import { getSelectedIconCollection } from './icon'
 import { attachEventListener, attachEventListeners, detachAllEventListeners } from './event-listener'
+import { onCollectionChanged, onCategoryChanged, onSearchChanged } from './listener'
 
 import type { Editor } from 'grapesjs'
 import type { ModalOptions, IconCollection } from '../types'
 
-export function generateModalContent (
-  selectedIconCollection: IconCollection,
-  iconCollections: IconCollection[],
-  searchPlaceholder: string
-): string {
-  const fragmentElement = new DocumentFragment()
-  const actionsElement = generateActionsElement(iconCollections, searchPlaceholder)
-  const contentElement = generateContentElement(selectedIconCollection)
+function attachListeners () {
+  const collectionElement = document.querySelector<HTMLSelectElement>(`.${collectionName}`)
+  const categoryElements = document.querySelectorAll<HTMLSelectElement>(`.${categoryName}`)
+  const searchElement = document.querySelector<HTMLInputElement>(`.${searchName}`)
 
-  fragmentElement.appendChild(actionsElement)
-  fragmentElement.appendChild(contentElement)
+  if (!collectionElement || !categoryElements || !searchElement) {
+    return
+  }
 
-  return getFragmentHtml(fragmentElement)
+  const collectionListener = onCollectionChanged()
+  const categoryListener = onCategoryChanged()
+  const searchListener = onSearchChanged()
+
+  attachEventListener<HTMLSelectElement>('change', collectionElement, collectionListener)
+  attachEventListeners<HTMLSelectElement>('change', categoryElements, categoryListener)
+  attachEventListener<HTMLInputElement>('input', searchElement, searchListener)
 }
 
 export function openModal (editor: Editor, modalOptions: ModalOptions, iconCollections: IconCollection[]) {
@@ -44,17 +48,5 @@ export function openModal (editor: Editor, modalOptions: ModalOptions, iconColle
     detachAllEventListeners()
   })
 
-  const collectionElement = document.querySelector<HTMLSelectElement>(`.${collectionName}`)
-  const categoryElements = document.querySelectorAll<HTMLSelectElement>(`.${categoryName}`)
-
-  if (!collectionElement || !categoryElements) {
-    return
-  }
-
-  attachEventListener<HTMLSelectElement>('change', collectionElement, () => {
-    console.log('collection changed')
-  })
-  attachEventListeners<HTMLSelectElement>('change', categoryElements, () => {
-    console.log('category changed')
-  })
+  attachListeners()
 }

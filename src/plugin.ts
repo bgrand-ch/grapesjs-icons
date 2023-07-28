@@ -1,6 +1,8 @@
+import { containerName } from './constants'
 import { getModalOptions, getComponentOptions, getBlockOptions } from './utils/option'
 import { getIconCollections } from './utils/icon'
 import { openModal } from './utils/modal'
+import { detachAllEventListeners } from './utils/event-listener'
 
 import type { Plugin, Component } from 'grapesjs'
 import type { IconCollection, PluginOptions } from './types'
@@ -72,6 +74,16 @@ const plugin: Plugin<PluginOptions> = (editor, options) => {
 
   editor.on('load', async () => {
     iconCollections = await getIconCollections(collections)
+  })
+
+  editor.on('modal:open', () => {
+    const containerElement = document.querySelector(`.${containerName}`)
+
+    if (!containerElement) {
+      return
+    }
+
+    detachAllEventListeners()
   })
 
   editor.on('block:drag:stop', (component: Component) => {

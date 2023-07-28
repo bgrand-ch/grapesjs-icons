@@ -1,6 +1,6 @@
 import {
   collectionName, categoryName, searchName, actionsName,
-  iconTargetName, contentName, containerName
+  iconTargetName, contentName, containerName, activeColor
 } from '../constants'
 import { getIconCollectionOptions, getIconCategoryOptions } from './icon'
 
@@ -17,6 +17,14 @@ function generateSelectElement (options: SelectOption[]): HTMLSelectElement {
 
     selectElement.appendChild(optionElement)
   }
+
+  selectElement.style.padding = '10px 14px'
+  selectElement.style.borderRadius = '6px'
+  selectElement.style.border = `1px solid ${activeColor}`
+  selectElement.style.fontSize = 'inherit'
+  selectElement.style.fontFamily = 'inherit'
+  selectElement.style.color = 'black'
+  selectElement.style.backgroundColor = 'white'
 
   return selectElement
 }
@@ -55,6 +63,11 @@ export function generateSearchElement (placeholder: string): HTMLInputElement {
   searchElement.placeholder = placeholder
   searchElement.style.padding = '10px 14px'
   searchElement.style.borderRadius = '6px'
+  searchElement.style.border = `1px solid ${activeColor}`
+  searchElement.style.fontSize = 'inherit'
+  searchElement.style.fontFamily = 'inherit'
+  searchElement.style.color = 'black'
+  searchElement.style.backgroundColor = 'white'
   searchElement.classList.add(searchName)
 
   return searchElement
@@ -72,6 +85,7 @@ export function generateActionsElement (
 
   actionsElement.style.display = 'flex'
   actionsElement.style.gap = '10px'
+  actionsElement.style.marginBottom = '10px'
   actionsElement.classList.add(actionsName)
 
   collectionElement.style.flexGrow = '1'
@@ -147,4 +161,19 @@ export function getFragmentHtml (fragmentElement: DocumentFragment): string {
   containerElement.appendChild(fragmentElement)
 
   return containerElement.outerHTML
+}
+
+export function generateModalContent (
+  selectedIconCollection: IconCollection,
+  iconCollections: IconCollection[],
+  searchPlaceholder: string
+): string {
+  const fragmentElement = new DocumentFragment()
+  const actionsElement = generateActionsElement(iconCollections, searchPlaceholder)
+  const contentElement = generateContentElement(selectedIconCollection)
+
+  fragmentElement.appendChild(actionsElement)
+  fragmentElement.appendChild(contentElement)
+
+  return getFragmentHtml(fragmentElement)
 }

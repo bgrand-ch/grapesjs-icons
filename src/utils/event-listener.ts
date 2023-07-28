@@ -67,6 +67,10 @@ export function detachAllEventListeners (className?: string): void {
   const totalEventListeners = eventListeners.length
   const removedIndexes: number[] = []
 
+  if (totalEventListeners === 0) {
+    return
+  }
+
   for (let index = 0; index < totalEventListeners; index++) {
     const { type, element, listener } = eventListeners[index]
 
