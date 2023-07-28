@@ -59,10 +59,25 @@ const editor = grapesjs.init({
 
 ## Command
 
-```ts
+### JavaScript
+
+```js
 const commandOptions = {
   insertionMode: 'click' // default to "drop"
 }
+
+editor.runCommand('open-icon-modal', commandOptions)
+```
+
+### TypeScript
+
+```ts
+import type { CommandOptions } from 'grapesjs-icons'
+
+const commandOptions: CommandOptions = {
+  insertionMode: 'click' // default to "drop"
+}
+
 editor.runCommand('open-icon-modal', commandOptions)
 ```
 
