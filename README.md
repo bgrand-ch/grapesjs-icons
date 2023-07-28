@@ -59,7 +59,7 @@ const editor = grapesjs.init({
 
 ## Command
 
-> `drop` insertion mode is not yet implemented. The idea is to open the icons modal from anywhere using the "open-icon-modal" command, choose an icon and drop it by clicking somewhere in the GrapesJS canvas. Do you want contribute?
+> `click` insertion mode is not yet implemented. The idea is to open the icons modal from anywhere using the `open-icons-modal` command, choose an icon and drop it by clicking somewhere in the GrapesJS canvas. Do you want contribute?
 
 ### JavaScript
 
@@ -68,7 +68,7 @@ const commandOptions = {
   insertionMode: 'click' // default to "drop"
 }
 
-editor.runCommand('open-icon-modal', commandOptions)
+editor.runCommand('open-icons-modal', commandOptions)
 ```
 
 ### TypeScript
@@ -80,7 +80,7 @@ const commandOptions: CommandOptions = {
   insertionMode: 'click' // default to "drop"
 }
 
-editor.runCommand('open-icon-modal', commandOptions)
+editor.runCommand('open-icons-modal', commandOptions)
 ```
 
 ## Options
