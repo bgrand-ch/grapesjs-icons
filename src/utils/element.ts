@@ -50,6 +50,8 @@ export function generateCategoryElements (iconCollections: IconCollection[]): HT
     const categoryOptions = getIconCategoryOptions(iconCollection)
     const categoryElement = generateCategoryElement(categoryOptions)
 
+    categoryElement.dataset.collectionName = iconCollection.prefix
+
     categoryElements.push(categoryElement)
   }
 

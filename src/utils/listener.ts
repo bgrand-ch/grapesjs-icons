@@ -1,14 +1,40 @@
+import { categoryName } from '../constants'
 import { setIconCollectionName, setIconCategoryName } from './storage'
 
 export function onCollectionChanged (): EventListener {
-  return event => {
-    const element = event.target as HTMLSelectElement|null
+  let categoryElements: NodeListOf<HTMLSelectElement>|null = null
 
-    if (!element) {
+  return event => {
+    const collectionElement = event.target as HTMLSelectElement|null
+
+    if (!collectionElement) {
       return
     }
 
-    setIconCollectionName(element.value)
+    if (!categoryElements) {
+      categoryElements = document.querySelectorAll<HTMLSelectElement>(`.${categoryName}`)
+    }
+
+    const collectionName = collectionElement.value
+
+    setIconCollectionName(collectionName)
+
+    for (const categoryElement of categoryElements) {
+      const dataCollectionName = categoryElement.dataset.collectionName!
+
+      if (dataCollectionName !== collectionName) {
+        categoryElement.style.display = 'none'
+        continue
+      }
+
+      const firstOption = categoryElement.options[0]
+      const changeEvent = new Event('change')
+
+      categoryElement.style.display = 'initial'
+      categoryElement.value = firstOption.value
+
+      categoryElement.dispatchEvent(changeEvent)
+    }
   }
 }
 
