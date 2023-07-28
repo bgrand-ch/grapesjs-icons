@@ -1,6 +1,6 @@
 # GrapesJS icons plugin with Iconify
 
-> The `grapesjs-icons` plugin is not an official Iconify plugin and is not maintained by the Iconify team. This plugin uses the Iconify API. This API is the biggest expense of the Iconify team. If you use the `grapesjs-icons` plugin, please [donate to Iconify](https://iconify.design/sponsors/) to guarantee free use of the API.
+> `grapesjs-icons` plugin is not an official Iconify plugin and is not maintained by the Iconify team. This plugin uses the Iconify API. This API is the biggest expense of the Iconify team. If you use `grapesjs-icons` plugin, please [donate to Iconify](https://iconify.design/sponsors/) to guarantee free use of the API.
 
 ## Installation
 
@@ -58,6 +58,8 @@ const editor = grapesjs.init({
 ```
 
 ## Command
+
+> `drop` insertion mode is not yet implemented. The idea is to open the icons modal from anywhere using the "open-icon-modal" command, choose an icon and drop it by clicking somewhere in the GrapesJS canvas. Do you want contribute?
 
 ### JavaScript
 
