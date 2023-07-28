@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "grapesjs-icons",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "GrapesJS icons plugin with Iconify",
   "author": "Benjamin Grand",
   "license": "BSD-3-Clause",
@@ -27,8 +27,8 @@
     "iconify-icon": "1.0.8"
   },
   "devDependencies": {
-    "commitizen": "^4.3.0",
-    "cz-conventional-changelog": "^3.3.0",
+    "commitizen": "4.3.0",
+    "cz-conventional-changelog": "3.3.0",
     "grapesjs": "0.21.3",
     "typescript": "5.1.6",
     "vite": "4.4.7",
