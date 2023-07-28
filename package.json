@@ -20,12 +20,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "commit": "git add . && git status && git-cz && git status"
   },
   "dependencies": {
     "iconify-icon": "1.0.8"
   },
   "devDependencies": {
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "grapesjs": "0.21.3",
     "typescript": "5.1.6",
     "vite": "4.4.7",
