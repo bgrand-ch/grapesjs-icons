@@ -1,16 +1,17 @@
-import { containerName } from './constants'
+import { openModalName, containerName } from './constants'
 import { getModalOptions, getComponentOptions, getBlockOptions } from './utils/option'
 import { getIconCollections } from './utils/icon'
 import { openModal } from './utils/modal'
 import { detachAllEventListeners } from './utils/event-listener'
+import { setInsertionMode } from './utils/storage'
 
-import type { Plugin, Component } from 'grapesjs'
-import type { IconCollection, PluginOptions } from './types'
+import type { Plugin, Component, Command } from 'grapesjs'
+import type { IconCollection, PluginOptions, CommandOptions } from './types'
 
-const commandName = 'open-icon-modal'
-
+const commandOptions: Required<CommandOptions> = {
+  insertionMode: 'drop'
+}
 const plugin: Plugin<PluginOptions> = (editor, options) => {
-  const { DomComponents, Commands, Modal, BlockManager } = editor
   const { collections, modal = {}, component = {}, block = {} } = options
   const modalOptions = getModalOptions(modal)
   const { type, name } = getComponentOptions(component)
@@ -18,7 +19,39 @@ const plugin: Plugin<PluginOptions> = (editor, options) => {
 
   let iconCollections: IconCollection[] = []
 
-  DomComponents.addType(type, {
+  function listenEditorEvents () {
+    editor.on('load', async () => {
+      iconCollections = await getIconCollections(collections)
+    })
+
+    editor.on('modal:open', () => {
+      const containerElement = document.querySelector(`.${containerName}`)
+
+      if (!containerElement) {
+        return
+      }
+
+      detachAllEventListeners()
+    })
+
+    editor.on('block:drag:stop', (component: Component) => {
+      const {
+        'data-type': componentType
+      } = component.getAttributes()
+
+      if (
+        componentType !== type ||
+        editor.Modal.isOpen()
+      ) {
+        return
+      }
+
+      editor.select(component)
+      editor.Commands.run(openModalName, commandOptions)
+    })
+  }
+
+  editor.DomComponents.addType(type, {
     isComponent (element) {
       return element.dataset?.type === type
     },
@@ -50,21 +83,22 @@ const plugin: Plugin<PluginOptions> = (editor, options) => {
 
         if (
           (elementType !== type && !parentByType) ||
-          Modal.isOpen()
+          editor.Modal.isOpen()
         ) {
           return
         }
 
-        Commands.run(commandName)
+        editor.Commands.run(openModalName, commandOptions)
       }
     }
   })
 
-  Commands.add(commandName, () => {
+  editor.Commands.add<Command>(openModalName, (_editor, _sender, options: CommandOptions = {}) => {
+    setInsertionMode(options.insertionMode)
     openModal(editor, modalOptions, iconCollections)
   })
 
-  BlockManager.add(type, {
+  editor.BlockManager.add(type, {
     category,
     label: name,
     content: {
@@ -72,35 +106,7 @@ const plugin: Plugin<PluginOptions> = (editor, options) => {
     }
   })
 
-  editor.on('load', async () => {
-    iconCollections = await getIconCollections(collections)
-  })
-
-  editor.on('modal:open', () => {
-    const containerElement = document.querySelector(`.${containerName}`)
-
-    if (!containerElement) {
-      return
-    }
-
-    detachAllEventListeners()
-  })
-
-  editor.on('block:drag:stop', (component: Component) => {
-    const {
-      'data-type': componentType
-    } = component.getAttributes()
-
-    if (
-      componentType !== type ||
-      Modal.isOpen()
-    ) {
-      return
-    }
-
-    editor.select(component)
-    Commands.run(commandName)
-  })
+  listenEditorEvents()
 }
 
 export default plugin

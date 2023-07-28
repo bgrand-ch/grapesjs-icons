@@ -54,3 +54,9 @@ export type EventListenerData = {
   element: HTMLElement,
   listener: EventListener
 }
+
+export type InsertionMode = 'drop'|'click'
+
+export type CommandOptions = {
+  insertionMode?: InsertionMode
+}

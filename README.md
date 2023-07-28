@@ -24,7 +24,7 @@ yarn add grapesjs-icons
 import grapesjs from 'grapesjs'
 import grapesjsIcons from 'grapesjs-icons'
 
-grapesjs.init({
+const editor = grapesjs.init({
   // ...
   plugins: [
     grapesjsIcons
@@ -45,7 +45,7 @@ grapesjs.init({
 import grapesjs, { usePlugin } from 'grapesjs'
 import grapesjsIcons from 'grapesjs-icons'
 
-grapesjs.init({
+const editor = grapesjs.init({
   // ...
   plugins: [
     usePlugin(grapesjsIcons, {
@@ -55,6 +55,15 @@ grapesjs.init({
   ]
   // ...
 })
+```
+
+## Command
+
+```ts
+const commandOptions = {
+  insertionMode: 'click' // default to "drop"
+}
+editor.runCommand('open-icon-modal', commandOptions)
 ```
 
 ## Options
