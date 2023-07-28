@@ -4,6 +4,7 @@ import { getIconCollections } from './utils/icon'
 import { openModal } from './utils/modal'
 import { detachAllEventListeners } from './utils/event-listener'
 import { setInsertionMode } from './utils/storage'
+import { loadSvgIcons } from './utils/svg'
 
 import type { Plugin, Component, Command } from 'grapesjs'
 import type { IconCollection, PluginOptions, CommandOptions } from './types'
@@ -22,10 +23,11 @@ const plugin: Plugin<PluginOptions> = (editor, options) => {
   function listenEditorEvents () {
     editor.on('load', async () => {
       iconCollections = await getIconCollections(collections)
+      loadSvgIcons(editor)
     })
 
     editor.on('modal:open', () => {
-      const containerElement = document.querySelector(`.${containerName}`)
+      const containerElement = document.querySelector<HTMLDivElement>(`.${containerName}`)
 
       if (!containerElement) {
         return

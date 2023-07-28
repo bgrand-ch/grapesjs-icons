@@ -1,13 +1,13 @@
 import { collectionName, categoryName, searchName } from '../constants'
-import { generateModalContent } from './element'
-import { getSelectedIconCollection } from './icon'
+import { generateModalContent, selectFirstOptionElement } from './element'
 import { attachEventListener, attachEventListeners, detachAllEventListeners } from './event-listener'
 import { onCollectionChanged, onCategoryChanged, onSearchChanged } from './listener'
+import { getIconCollectionName } from './storage'
 
 import type { Editor } from 'grapesjs'
 import type { ModalOptions, IconCollection } from '../types'
 
-function attachListeners () {
+function attachListeners (iconCollections: IconCollection[]) {
   const collectionElement = document.querySelector<HTMLSelectElement>(`.${collectionName}`)
   const categoryElements = document.querySelectorAll<HTMLSelectElement>(`.${categoryName}`)
   const searchElement = document.querySelector<HTMLInputElement>(`.${searchName}`)
@@ -17,25 +17,23 @@ function attachListeners () {
   }
 
   const collectionListener = onCollectionChanged()
-  const categoryListener = onCategoryChanged()
+  const categoryListener = onCategoryChanged(iconCollections)
   const searchListener = onSearchChanged()
 
   attachEventListener<HTMLSelectElement>('change', collectionElement, collectionListener)
   attachEventListeners<HTMLSelectElement>('change', categoryElements, categoryListener)
   attachEventListener<HTMLInputElement>('input', searchElement, searchListener)
+
+  const iconCollectionName = getIconCollectionName() || ''
+
+  selectFirstOptionElement(collectionElement, iconCollectionName)
 }
 
 export function openModal (editor: Editor, modalOptions: ModalOptions, iconCollections: IconCollection[]) {
   const { Modal } = editor
   const { title, searchText } = modalOptions
-  const selectedIconCollection = getSelectedIconCollection(iconCollections)
-
-  if (!selectedIconCollection) {
-    return
-  }
 
   const content = generateModalContent(
-    selectedIconCollection,
     iconCollections,
     searchText
   )
@@ -48,5 +46,5 @@ export function openModal (editor: Editor, modalOptions: ModalOptions, iconColle
     detachAllEventListeners()
   })
 
-  attachListeners()
+  attachListeners(iconCollections)
 }

@@ -1,32 +1,8 @@
-import { getIconCollectionName, setIconCollectionName } from './storage'
-
 import type { IconCollection, SelectOption } from '../types'
 
 const apiUrl = import.meta.env.VITE_ICONIFY_API_URL
 const pluginName = import.meta.env.VITE_PLUGIN_NAME
 const logScope = `[${pluginName}::utils/icon]`
-
-export function getSelectedIconCollection (iconCollections: IconCollection[]): IconCollection|null {
-  let iconCollectionName = getIconCollectionName()
-
-  if (!iconCollectionName) {
-    const firstIconCollection = iconCollections[0]
-    const { prefix } = firstIconCollection
-
-    setIconCollectionName(prefix)
-    iconCollectionName = prefix
-  }
-
-  const selectedIconCollection = iconCollections.find(iconCollection => {
-    return iconCollection.prefix === iconCollectionName
-  })
-
-  if (!selectedIconCollection) {
-    return null
-  }
-
-  return selectedIconCollection
-}
 
 export async function getIconCollection (collectionName: string): Promise<IconCollection|null> {
   try {

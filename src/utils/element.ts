@@ -18,6 +18,8 @@ function generateSelectElement (options: SelectOption[]): HTMLSelectElement {
     selectElement.appendChild(optionElement)
   }
 
+  selectElement.style.maxWidth = '220px'
+  selectElement.style.width = '100%'
   selectElement.style.padding = '10px 14px'
   selectElement.style.borderRadius = '6px'
   selectElement.style.border = `1px solid ${activeColor}`
@@ -58,6 +60,32 @@ export function generateCategoryElements (iconCollections: IconCollection[]): HT
   return categoryElements
 }
 
+export function selectFirstOptionElement (
+  element: HTMLSelectElement,
+  value?: string
+): void {
+  const changeEvent = new Event('change')
+  const optionElements = element.options
+
+  let optionElement = optionElements[0]
+
+  if (value) {
+    for (const optionEl of optionElements) {
+      if (optionEl.value !== value) {
+        continue
+      }
+
+      optionElement = optionEl
+      break
+    }
+  }
+
+  element.style.display = 'initial'
+  element.value = optionElement.value
+
+  element.dispatchEvent(changeEvent)
+}
+
 export function generateSearchElement (placeholder: string): HTMLInputElement {
   const searchElement = document.createElement('input')
 
@@ -90,13 +118,11 @@ export function generateActionsElement (
   actionsElement.style.marginBottom = '10px'
   actionsElement.classList.add(actionsName)
 
-  collectionElement.style.flexGrow = '1'
-  searchElement.style.flexGrow = '2'
+  searchElement.style.flexGrow = '1'
 
   actionsElement.appendChild(collectionElement)
   categoryElements.forEach(categoryElement => {
     categoryElement.style.display = 'none'
-    categoryElement.style.flexGrow = '1'
     actionsElement.appendChild(categoryElement)
   })
   actionsElement.appendChild(searchElement)
@@ -166,16 +192,13 @@ export function getFragmentHtml (fragmentElement: DocumentFragment): string {
 }
 
 export function generateModalContent (
-  selectedIconCollection: IconCollection,
   iconCollections: IconCollection[],
   searchPlaceholder: string
 ): string {
   const fragmentElement = new DocumentFragment()
   const actionsElement = generateActionsElement(iconCollections, searchPlaceholder)
-  const contentElement = generateContentElement(selectedIconCollection)
 
   fragmentElement.appendChild(actionsElement)
-  fragmentElement.appendChild(contentElement)
 
   return getFragmentHtml(fragmentElement)
 }
