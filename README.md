@@ -2,6 +2,10 @@
 
 > `grapesjs-icons` plugin is not an official Iconify plugin and is not maintained by the Iconify team. This plugin uses the Iconify API. This API is the biggest expense of the Iconify team. If you use `grapesjs-icons` plugin, please [donate to Iconify](https://iconify.design/sponsors/) to guarantee free use of the API.
 
+## Demo
+
+![GrapesJS icons plugin demo](https://github.com/bgrand-ch/grapesjs-icons/blob/main/demo.gif)
+
 ## Installation
 
 ```shell
@@ -24,16 +28,22 @@ yarn add grapesjs-icons
 import grapesjs from 'grapesjs'
 import grapesjsIcons from 'grapesjs-icons'
 
+const options = {
+  // see https://icon-sets.iconify.design/
+  collections: [
+    'ri', // Remix Icon by Remix Design
+    'mdi', // Material Design Icons by Pictogrammers
+    'uim', // Unicons Monochrome by Iconscout
+    'streamline-emojis' // Streamline Emojis by Streamline
+  ]
+}
 const editor = grapesjs.init({
   // ...
   plugins: [
     grapesjsIcons
   ],
   pluginOpts: {
-    [grapesjsIcons]: {
-      // see https://icon-sets.iconify.design/
-      collections: ['ri', 'uim', 'streamline-emojis']
-    }
+    [grapesjsIcons]: options
   }
   // ...
 })
@@ -45,49 +55,48 @@ const editor = grapesjs.init({
 import grapesjs, { usePlugin } from 'grapesjs'
 import grapesjsIcons from 'grapesjs-icons'
 
+import type { PluginOptions } from 'grapesjs-icons'
+
+const options: PluginOptions = {
+  // see https://icon-sets.iconify.design/
+  collections: [
+    'ri', // Remix Icon by Remix Design,
+    'mdi', // Material Design Icons by Pictogrammers
+    'uim', // Unicons Monochrome by Iconscout
+    'streamline-emojis' // Streamline Emojis by Streamline
+  ]
+}
 const editor = grapesjs.init({
   // ...
   plugins: [
-    usePlugin(grapesjsIcons, {
-      // see https://icon-sets.iconify.design/
-      collections: ['ri', 'uim', 'streamline-emojis']
-    })
+    usePlugin(grapesjsIcons, options)
   ]
   // ...
 })
 ```
 
+## How do I find and use an Iconify collection?
+
+1. Search for an icon collection on the [Iconify website](https://icon-sets.iconify.design/).
+2. Click on a collection (a.k.a "set" on [Iconify website](https://icon-sets.iconify.design/)) or an icon.
+3. Copy the shortcut name of the collection in the URL. Examples:
+    - *Remix* collection: `https://icon-sets.iconify.design/ri/` -> Copy `ri`
+    - *Remix* icon: `https://icon-sets.iconify.design/ri/add-fill/` -> Copy `ri`
+4. Paste the shortcut name of the collection in the `collections` option of the plugin.
+
 ## Command
 
 > `click` insertion mode is not yet implemented. The idea is to open the icons modal from anywhere using the `open-icons-modal` command, choose an icon and drop it by clicking somewhere in the GrapesJS canvas. Do you want contribute?
 
-### JavaScript
-
-```js
-const commandOptions = {
-  insertionMode: 'click' // default to "drop"
-}
-
-editor.runCommand('open-icons-modal', commandOptions)
-```
-
-### TypeScript
-
 ```ts
-import type { CommandOptions } from 'grapesjs-icons'
-
-const commandOptions: CommandOptions = {
-  insertionMode: 'click' // default to "drop"
-}
-
-editor.runCommand('open-icons-modal', commandOptions)
+editor.runCommand('open-icons-modal')
 ```
 
 ## Options
 
 ```ts
 {
-  // required
+  // required, list of collection shortcut names
   collections: string[],
 
   // optional

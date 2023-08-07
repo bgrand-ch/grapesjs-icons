@@ -1,4 +1,4 @@
-import { collectionName, categoryName, searchName } from '../constants'
+import { collectionName, categoryName, searchName, modalContainerName } from '../constants'
 import { generateModalContent, selectFirstOptionElement } from './element'
 import { attachEventListener, attachEventListeners, detachAllEventListeners } from './event-listener'
 import { onCollectionChanged, onCategoryChanged, onSearchChanged } from './listener'
@@ -39,7 +39,10 @@ export function openModal (editor: Editor, modalOptions: ModalOptions, iconColle
   )
   const modalModule = Modal.open({
     title,
-    content
+    content,
+    attributes: {
+      class: modalContainerName
+    }
   })
 
   modalModule.onceClose(() => {

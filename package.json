@@ -1,13 +1,13 @@
 {
   "type": "module",
   "name": "grapesjs-icons",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "GrapesJS icons plugin with Iconify",
   "author": "Benjamin Grand",
   "license": "BSD-3-Clause",
   "main": "./dist/plugin.cjs",
   "module": "./dist/plugin.js",
-  "types": "./dist/types/plugin.d.ts",
+  "types": "./dist/plugin.d.ts",
   "exports": {
     ".": {
       "require": "./dist/plugin.cjs",
@@ -29,10 +29,10 @@
   "devDependencies": {
     "commitizen": "4.3.0",
     "cz-conventional-changelog": "3.3.0",
-    "grapesjs": "0.21.3",
+    "grapesjs": "0.21.4",
     "typescript": "5.1.6",
-    "vite": "4.4.7",
-    "vite-plugin-dts": "3.3.1"
+    "vite": "4.4.9",
+    "vite-plugin-dts": "3.5.1"
   },
   "peerDependencies": {
     "grapesjs": ">=0.17.26"
@@ -50,6 +50,8 @@
     "grapesjs",
     "plugin",
     "icons",
-    "iconify"
+    "icon",
+    "iconify",
+    "svg"
   ]
 }

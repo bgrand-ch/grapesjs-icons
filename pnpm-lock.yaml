@@ -17,17 +17,17 @@ devDependencies:
     specifier: 3.3.0
     version: 3.3.0
   grapesjs:
-    specifier: 0.21.3
-    version: 0.21.3
+    specifier: 0.21.4
+    version: 0.21.4
   typescript:
     specifier: 5.1.6
     version: 5.1.6
   vite:
-    specifier: 4.4.7
-    version: 4.4.7(@types/node@20.4.5)
+    specifier: 4.4.9
+    version: 4.4.9(@types/node@20.4.5)
   vite-plugin-dts:
-    specifier: 3.3.1
-    version: 3.3.1(@types/node@20.4.5)(typescript@5.1.6)(vite@4.4.7)
+    specifier: 3.5.1
+    version: 3.5.1(@types/node@20.4.5)(typescript@5.1.6)(vite@4.4.9)
 
 packages:
 
@@ -1149,8 +1149,8 @@ packages:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
     dev: true
 
-  /grapesjs@0.21.3:
-    resolution: {integrity: sha512-EzHRDWGSJRuCjkxTuxBwdOOO/NKSHL8Yjoy5gQOCpamNli6LKMgrt6RCuMVNiJhvo40c8S3pBbK5Tza+5xYw5Q==}
+  /grapesjs@0.21.4:
+    resolution: {integrity: sha512-Ynsni90qIirNFvbwHnXtYumZjEDNjObC329ZHFPfqVxVnhgf/o59xeo+2Ce+W8928A4BDVmQHGKMHD5+fDp+jg==}
     dependencies:
       '@types/backbone': 1.4.15
       backbone: 1.4.1
@@ -1592,6 +1592,7 @@ packages:
   /punycode@2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
+    requiresBuild: true
     dev: true
 
   /readable-stream@3.6.2:
@@ -1665,8 +1666,8 @@ packages:
       signal-exit: 3.0.7
     dev: true
 
-  /rollup@3.27.0:
-    resolution: {integrity: sha512-aOltLCrYZ0FhJDm7fCqwTjIUEVjWjcydKBV/Zeid6Mn8BWgDCUBBWT5beM5ieForYNo/1ZHuGJdka26kvQ3Gzg==}
+  /rollup@3.27.2:
+    resolution: {integrity: sha512-YGwmHf7h2oUHkVBT248x0yt6vZkYQ3/rvE5iQuVBh3WO8GcJ6BNeOkpoX1yMHIiBm18EMLjBPIoUDkhgnyxGOQ==}
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
     optionalDependencies:
@@ -1886,8 +1887,8 @@ packages:
     engines: {node: '>= 0.10'}
     dev: true
 
-  /vite-plugin-dts@3.3.1(@types/node@20.4.5)(typescript@5.1.6)(vite@4.4.7):
-    resolution: {integrity: sha512-RFebFGg6GWKkZqRQ5n6ls8giSiygKMBriJTFp8N+CRbYgI4lMXBxXEx0z2bthfeQv/xB53Wmhn/LNOOqb9OQHQ==}
+  /vite-plugin-dts@3.5.1(@types/node@20.4.5)(typescript@5.1.6)(vite@4.4.9):
+    resolution: {integrity: sha512-wrrIvRTWq9xL0HKOUvJyJ+wivEoLsZ2GU2I2000v5tAAUtu9gE+5OUmUJ9yNkmyYz3tSPedkkiXHeb5jnnSXhg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       typescript: '*'
@@ -1902,7 +1903,7 @@ packages:
       debug: 4.3.4
       kolorist: 1.8.0
       typescript: 5.1.6
-      vite: 4.4.7(@types/node@20.4.5)
+      vite: 4.4.9(@types/node@20.4.5)
       vue-tsc: 1.8.8(typescript@5.1.6)
     transitivePeerDependencies:
       - '@types/node'
@@ -1910,8 +1911,8 @@ packages:
       - supports-color
     dev: true
 
-  /vite@4.4.7(@types/node@20.4.5):
-    resolution: {integrity: sha512-6pYf9QJ1mHylfVh39HpuSfMPojPSKVxZvnclX1K1FyZ1PXDOcLBibdq5t1qxJSnL63ca8Wf4zts6mD8u8oc9Fw==}
+  /vite@4.4.9(@types/node@20.4.5):
+    resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -1941,7 +1942,7 @@ packages:
       '@types/node': 20.4.5
       esbuild: 0.18.17
       postcss: 8.4.27
-      rollup: 3.27.0
+      rollup: 3.27.2
     optionalDependencies:
       fsevents: 2.3.2
     dev: true

@@ -6,7 +6,12 @@ import plugin from './plugin'
 import type { PluginOptions } from './types'
 
 const options: PluginOptions = {
-  collections: ['mdi', 'ri', 'emojione']
+  collections: [
+    'mdi',
+    'ri',
+    'uim',
+    'streamline-emojis'
+  ]
 }
 
 grapesjs.init({

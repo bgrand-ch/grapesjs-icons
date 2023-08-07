@@ -17,7 +17,7 @@ export default defineConfig({
   },
   plugins: [
     dts({
-      outDir: './dist/types',
+      rollupTypes: true,
       exclude: [
         './src/editor.ts'
       ]
