@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "grapesjs-icons",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "GrapesJS icons plugin with Iconify",
   "author": "Benjamin Grand",
   "license": "BSD-3-Clause",
@@ -23,19 +23,18 @@
     "preview": "vite preview",
     "commit": "git add . && git status && git-cz && git status"
   },
-  "dependencies": {
-    "iconify-icon": "1.0.8"
-  },
   "devDependencies": {
     "commitizen": "4.3.0",
     "cz-conventional-changelog": "3.3.0",
-    "grapesjs": "0.21.4",
-    "typescript": "5.1.6",
-    "vite": "4.4.9",
-    "vite-plugin-dts": "3.5.1"
+    "grapesjs": "0.21.8",
+    "iconify-icon": "1.0.8",
+    "typescript": "5.3.3",
+    "vite": "5.0.10",
+    "vite-plugin-dts": "3.7.0"
   },
   "peerDependencies": {
-    "grapesjs": ">=0.17.26"
+    "grapesjs": ">= 0.17.26",
+    "iconify-icon": ">= 1.0.8"
   },
   "homepage": "https://github.com/bgrand-ch/grapesjs-icons",
   "repository": {
