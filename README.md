@@ -9,7 +9,7 @@
 ## Installation
 
 ```shell
-npm install grapesjs grapesjs-icons
+npm install grapesjs grapesjs-icons iconify-icon
 ```
 
 ## Usage
