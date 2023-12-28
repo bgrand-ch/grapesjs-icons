@@ -9,15 +9,7 @@
 ## Installation
 
 ```shell
-npm install grapesjs-icons
-```
-
-```shell
-pnpm add grapesjs-icons
-```
-
-```shell
-yarn add grapesjs-icons
+npm install grapesjs grapesjs-icons
 ```
 
 ## Usage
@@ -28,7 +20,7 @@ yarn add grapesjs-icons
 import grapesjs from 'grapesjs'
 import grapesjsIcons from 'grapesjs-icons'
 
-const options = {
+const pluginOptions = {
   // see https://icon-sets.iconify.design/
   collections: [
     'ri', // Remix Icon by Remix Design
@@ -43,7 +35,7 @@ const editor = grapesjs.init({
     grapesjsIcons
   ],
   pluginOpts: {
-    [grapesjsIcons]: options
+    [grapesjsIcons]: pluginOptions
   }
   // ...
 })
@@ -55,9 +47,7 @@ const editor = grapesjs.init({
 import grapesjs, { usePlugin } from 'grapesjs'
 import grapesjsIcons from 'grapesjs-icons'
 
-import type { PluginOptions } from 'grapesjs-icons'
-
-const options: PluginOptions = {
+const pluginOptions = {
   // see https://icon-sets.iconify.design/
   collections: [
     'ri', // Remix Icon by Remix Design,
@@ -69,7 +59,7 @@ const options: PluginOptions = {
 const editor = grapesjs.init({
   // ...
   plugins: [
-    usePlugin(grapesjsIcons, options)
+    usePlugin(grapesjsIcons, pluginOptions)
   ]
   // ...
 })
