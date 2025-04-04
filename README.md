@@ -22,7 +22,7 @@ import grapesjsIcons from 'grapesjs-icons'
 
 const pluginOptions = {
   // see https://icon-sets.iconify.design/
-  collections: [
+  collectionPrefixes: [
     'ri', // Remix Icon by Remix Design
     'mdi', // Material Design Icons by Pictogrammers
     'uim', // Unicons Monochrome by Iconscout
@@ -47,9 +47,11 @@ const editor = grapesjs.init({
 import grapesjs, { usePlugin } from 'grapesjs'
 import grapesjsIcons from 'grapesjs-icons'
 
-const pluginOptions = {
+import type { PluginOptions } from 'grapesjs-icons'
+
+const pluginOptions: PluginOptions = {
   // see https://icon-sets.iconify.design/
-  collections: [
+  collectionPrefixes: [
     'ri', // Remix Icon by Remix Design,
     'mdi', // Material Design Icons by Pictogrammers
     'uim', // Unicons Monochrome by Iconscout
@@ -72,37 +74,14 @@ const editor = grapesjs.init({
 3. Copy the shortcut name of the collection in the URL. Examples:
     - *Remix* collection: `https://icon-sets.iconify.design/ri/` -> Copy `ri`
     - *Remix* icon: `https://icon-sets.iconify.design/ri/add-fill/` -> Copy `ri`
-4. Paste the shortcut name of the collection in the `collections` option of the plugin.
-
-## Command
-
-> `click` insertion mode is not yet implemented. The idea is to open the icons modal from anywhere using the `open-icons-modal` command, choose an icon and drop it by clicking somewhere in the GrapesJS canvas. Do you want contribute?
-
-```ts
-editor.runCommand('open-icons-modal')
-```
+4. Paste the shortcut name of the collection in the `collectionPrefixes` option of the plugin.
 
 ## Options
 
 ```ts
 {
   // required, list of collection shortcut names
-  collections: string[],
-
-  // optional
-  modal: {
-    title: string,
-    collectionText: string,
-    categoryText: string,
-    searchText: string
-  },
-  component: {
-    type: string,
-    name: string
-  },
-  block: {
-    category: string
-  }
+  collectionPrefixes: string[]
 }
 ```
 
