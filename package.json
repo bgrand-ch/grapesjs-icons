@@ -19,22 +19,19 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
-    "commit": "git add . && git status && git-cz && git status"
+    "prepare": "pnpm run build"
   },
   "devDependencies": {
-    "commitizen": "4.3.0",
-    "cz-conventional-changelog": "3.3.0",
-    "grapesjs": "0.21.8",
-    "iconify-icon": "1.0.8",
-    "typescript": "5.3.3",
-    "vite": "5.0.10",
-    "vite-plugin-dts": "3.7.0"
+    "grapesjs": "0.22.6",
+    "iconify-icon": "2.3.0",
+    "vite": "6.2.5",
+    "vite-plugin-dts": "4.5.3"
   },
   "peerDependencies": {
-    "grapesjs": ">= 0.17.26",
-    "iconify-icon": ">= 1.0.8"
+    "grapesjs": ">= 0.22.6",
+    "iconify-icon": ">= 2.3.0"
   },
   "homepage": "https://github.com/bgrand-ch/grapesjs-icons",
   "repository": {
@@ -50,6 +47,7 @@
     "plugin",
     "icons",
     "icon",
+    "ico",
     "iconify",
     "svg"
   ]

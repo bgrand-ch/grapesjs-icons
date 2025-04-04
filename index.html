@@ -1,3 +1,7 @@
+<!-- This file is only used by Vite during development. -->
+<!-- It is ignored when the files are built. -->
+<!-- It is an example, a demonstration. -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,8 +10,14 @@
     <title>GrapesJS icons plugin</title>
   </head>
   <body>
-    <div id="editor"></div>
-    <script type="module" src="/src/editor.ts"></script>
+    <div id="editor">
+      <div data-gjs-type="text">
+        Insert your text here
+      </div>
+    </div>
+
+    <script type="module" src="/src/example.ts"></script>
+
     <style>
       html, body {
         margin: 0;
@@ -17,6 +27,7 @@
         font: inherit;
         vertical-align: baseline;
       }
+
       body {
         line-height: 1;
       }
