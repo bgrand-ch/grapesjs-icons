@@ -11,7 +11,8 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        'grapesjs'
+        'grapesjs',
+        'iconify-icon'
       ]
     }
   },
@@ -19,7 +20,7 @@ export default defineConfig({
     dts({
       rollupTypes: true,
       exclude: [
-        './src/editor.ts'
+        './src/example.ts'
       ]
     })
   ]

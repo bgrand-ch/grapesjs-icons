@@ -1,114 +1,66 @@
-import { openModalName, containerName } from './constants'
-import { getModalOptions, getComponentOptions, getBlockOptions } from './utils/option'
-import { getIconCollections } from './utils/icon'
-import { openModal } from './utils/modal'
-import { detachAllEventListeners } from './utils/event-listener'
-import { setInsertionMode } from './utils/storage'
-import { loadSvgIcons } from './utils/svg'
+import { FETCHED_COMMAND, LOG_SCOPE, READY_COMMAND } from './utils/constant'
+import { addCommands } from './utils/command'
+import { getIconCollection, getIconNames } from './utils/icon'
+import { collectionStore } from './utils/store'
 
-import type { Plugin, Component, Command } from 'grapesjs'
-import type { IconCollection, PluginOptions, CommandOptions } from './types'
+import type { Plugin } from 'grapesjs'
+import type { CommandOptions, IconCollection, PluginOptions, ReadyCommandOptions } from './types'
 
-const commandOptions: Required<CommandOptions> = {
-  insertionMode: 'drop'
-}
 const plugin: Plugin<PluginOptions> = (editor, options) => {
-  const { collections, modal = {}, component = {}, block = {} } = options
-  const modalOptions = getModalOptions(modal)
-  const { type, name } = getComponentOptions(component)
-  const { category } = getBlockOptions(block)
+  const { collectionPrefixes } = options
 
-  let iconCollections: IconCollection[] = []
-
-  function listenEditorEvents () {
-    editor.on('load', async () => {
-      iconCollections = await getIconCollections(collections)
-      loadSvgIcons(editor)
-    })
-
-    editor.on('modal:open', () => {
-      const containerElement = document.querySelector<HTMLDivElement>(`.${containerName}`)
-
-      if (!containerElement) {
-        return
-      }
-
-      detachAllEventListeners()
-    })
-
-    editor.on('block:drag:stop', (component: Component) => {
-      const {
-        'data-type': componentType
-      } = component.getAttributes()
-
-      if (
-        componentType !== type ||
-        editor.Modal.isOpen()
-      ) {
-        return
-      }
-
-      editor.select(component)
-      editor.Commands.run(openModalName, commandOptions)
-    })
+  if (
+    !Array.isArray(collectionPrefixes) ||
+    collectionPrefixes.length === 0
+  ) {
+    console.warn(`${LOG_SCOPE} "collectionPrefixes" is required in plugin options`)
+    return
   }
 
-  editor.DomComponents.addType(type, {
-    isComponent (element) {
-      return element.dataset?.type === type
-    },
-    model: {
-      defaults: {
-        name,
-        tagName: 'span',
-        attributes: {
-          'data-type': type
-        },
-        style: {
-          display: 'inline-block',
-          width: '48px',
-          height: '48px'
-        }
+  addCommands(editor)
+
+  const lastCollectionIndex = collectionPrefixes.length - 1
+  const iconCollectionPromises: Promise<IconCollection|null>[] = collectionPrefixes.map(collectionPrefix => {
+    return getIconCollection(collectionPrefix)
+  })
+
+  Promise.allSettled(iconCollectionPromises).then(results => {
+    results.forEach((result, collectionIndex) => {
+      const collectionPrefix = collectionPrefixes[collectionIndex]
+
+      if (result.status === 'rejected' || !result.value) {
+        console.warn(`${LOG_SCOPE} Icon collection (${collectionPrefix}) error`, result)
+        return
       }
-    },
-    view: {
-      events: {
-        // @ts-ignore
-        dblclick: 'openIconModal'
-      },
-      openIconModal (event: Event) {
-        event.preventDefault()
 
-        const element = event.target as HTMLElement
-        const elementType = element?.getAttribute('data-type') || ''
-        const parentByType = element?.closest(`[data-type="${type}"]`)
+      const { prefix, title, total } = result.value
+      const options: CommandOptions = {
+        prefix,
+        title,
+        total: 0,
+        iconNames: []
+      }
 
+      getIconNames(result.value).then(iconNames => {
         if (
-          (elementType !== type && !parentByType) ||
-          editor.Modal.isOpen()
+          Array.isArray(iconNames) &&
+          iconNames.length > 0
         ) {
-          return
+          options.total = total
+          options.iconNames = iconNames
         }
 
-        editor.Commands.run(openModalName, commandOptions)
-      }
-    }
-  })
+        editor.runCommand(FETCHED_COMMAND, options)
 
-  editor.Commands.add<Command>(openModalName, (_editor, _sender, options: CommandOptions = {}) => {
-    setInsertionMode(options.insertionMode)
-    openModal(editor, modalOptions, iconCollections)
+        if (collectionIndex === lastCollectionIndex) {
+          const readyOptions: ReadyCommandOptions = Object.fromEntries(collectionStore.entries())
+          editor.runCommand(READY_COMMAND, readyOptions)
+        }
+      })
+    })
   })
-
-  editor.BlockManager.add(type, {
-    category,
-    label: name,
-    content: {
-      type
-    }
-  })
-
-  listenEditorEvents()
 }
 
 export default plugin
+
+export * from './types'

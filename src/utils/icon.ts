@@ -1,64 +1,39 @@
-import type { IconCollection, SelectOption } from '../types'
+import { API_URL, LOG_SCOPE } from './constant'
 
-const apiUrl = import.meta.env.VITE_ICONIFY_API_URL
-const pluginName = import.meta.env.VITE_PLUGIN_NAME
-const logScope = `[${pluginName}::utils/icon]`
+import type { IconCollection } from '../types'
 
-export async function getIconCollection (collectionName: string): Promise<IconCollection|null> {
+export function getIconFullName (collectionPrefix: string, iconName: string): string {
+  return `${collectionPrefix}:${iconName}`
+}
+
+export function getIconPagination (totalIcons: number, maxIcons: number = 15): number {
+  return Math.ceil(totalIcons / maxIcons)
+}
+
+export async function getIconCollection (collectionPrefix: string, cache: RequestCache = 'force-cache'): Promise<IconCollection|null> {
   try {
-    const response = await fetch(`${apiUrl}/collection?prefix=${collectionName}`)
-    const iconCollection = await response.json()
+    const response = await fetch(`${API_URL}/collection?prefix=${collectionPrefix}`, { cache })
+    const result = await response.json()
 
-    return iconCollection
-  } catch (error) {
-    console.error(`${logScope} "${collectionName}" fetching error`, error)
+    return result
+  } catch (err) {
+    const error = err as Error
+    console.warn(`${LOG_SCOPE} getIconCollection error`, error)
+
     return null
   }
 }
 
-export async function getIconCollections (collectionNames: string[]): Promise<IconCollection[]> {
-  const iconCollectionPromises: Promise<IconCollection|null>[] = []
+export async function getIconNames ({ categories = {}, uncategorized = [] }: IconCollection): Promise<string[]|null> {
+  try {
+    const categorized = Object.values(categories).flatMap(names => names)
+    const allIconNames = categorized.concat(uncategorized)
 
-  for (const collectionName of collectionNames) {
-    const iconCollectionPromise = getIconCollection(collectionName)
-    iconCollectionPromises.push(iconCollectionPromise)
+    return [...new Set(allIconNames)]
+  } catch (err) {
+    const error = err as Error
+    console.warn(`${LOG_SCOPE} getIconNames error`, error)
+
+    return null
   }
-
-  const rawIconCollections = await Promise.all(iconCollectionPromises)
-  const iconCollections = rawIconCollections.filter(iconCollection => {
-    return iconCollection !== null
-  }) as IconCollection[]
-
-  return iconCollections
-}
-
-export function getIconCollectionOptions (iconCollections: IconCollection[]): SelectOption[] {
-  const iconCollectionOptions: SelectOption[] = []
-
-  for (const { title, prefix } of iconCollections) {
-    const iconCollectionOption: SelectOption = {
-      text: title,
-      value: prefix
-    }
-
-    iconCollectionOptions.push(iconCollectionOption)
-  }
-
-  return iconCollectionOptions
-}
-
-export function getIconCategoryOptions (iconCollection: IconCollection): SelectOption[] {
-  const { categories } = iconCollection
-  const iconCategoryOptions: SelectOption[] = []
-
-  for (const category in categories) {
-    const iconCategoryOption: SelectOption = {
-      text: category,
-      value: category
-    }
-
-    iconCategoryOptions.push(iconCategoryOption)
-  }
-
-  return iconCategoryOptions
 }
