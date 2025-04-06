@@ -8,6 +8,12 @@ export type IconCollection = {
   hidden?: string[]
 }
 
+export type CommandOptions = Pick<IconCollection, 'prefix'|'title'|'total'> & {
+  iconNames: string[]
+}
+
+export type ReadyCommandOptions = Record<string, CommandOptions>
+
 export type PluginOptions = {
   collectionPrefixes: string[]
 }

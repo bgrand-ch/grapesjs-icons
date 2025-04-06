@@ -17,8 +17,8 @@ export async function getIconCollection (collectionPrefix: string, cache: Reques
 
     return result
   } catch (err) {
-    const { message } = err as Error
-    console.warn(`${LOG_SCOPE} getIconCollection - ${message}`)
+    const error = err as Error
+    console.warn(`${LOG_SCOPE} getIconCollection error`, error)
 
     return null
   }
@@ -31,8 +31,8 @@ export async function getIconNames ({ categories = {}, uncategorized = [] }: Ico
 
     return [...new Set(allIconNames)]
   } catch (err) {
-    const { message } = err as Error
-    console.warn(`${LOG_SCOPE} getAllIconNames - ${message}`)
+    const error = err as Error
+    console.warn(`${LOG_SCOPE} getIconNames error`, error)
 
     return null
   }
