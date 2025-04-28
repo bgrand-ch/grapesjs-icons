@@ -37,6 +37,8 @@ const plugin: Plugin<PluginOptions> = (editor, options) => {
     })
 
     editor.on('block:drag:stop', (component: Component) => {
+      if (!component) return
+
       const {
         'data-type': componentType
       } = component.getAttributes()
